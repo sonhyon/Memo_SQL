@@ -1,0 +1,27 @@
+-- employees 테이블 생성
+CREATE TABLE employees (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  department_id INT,
+  hire_date DATE
+);
+
+-- 예시 데이터 삽입
+INSERT INTO employees (id, name, department_id, hire_date) VALUES
+(1, 'Alice', 1, '2023-01-15'),
+(2, 'Bob', 1, '2023-06-20'),
+(3, 'Charlie', 2, '2022-12-01'),
+(4, 'Diana', 2, '2023-07-18'),
+(5, 'Ethan', 3, '2023-03-10'),
+(6, 'Fiona', 3, '2023-05-22'),
+(7, 'George', 1, '2023-08-30'),
+(8, 'Hannah', 2, '2023-06-15');
+
+#Q. 부서별(department_id)로 최근에 입사한 직원의 이름(name), 부서번호(department_id), 입사일(hire_date) 을 조회하라.
+SELECT name, department_id, hire_date FROM employees e1
+WHERE hire_date = (
+    SELECT MAX(hire_date)
+    FROM employees e2
+    WHERE e1.department_id = e2.department_id
+)
+ORDER BY department_id;
