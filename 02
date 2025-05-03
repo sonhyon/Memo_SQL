@@ -1,0 +1,29 @@
+-- 테이블 생성
+CREATE TABLE EMPLOYEES (
+  ID INT PRIMARY KEY,
+  NAME VARCHAR(50),
+  DEPARTMENT VARCHAR(50),
+  SALARY INT
+);
+
+-- 예시 데이터 삽입
+INSERT INTO EMPLOYEES (ID, NAME, DEPARTMENT, SALARY) VALUES
+(1, 'Alice', 'HR', 4000),
+(2, 'Bob', 'HR', 4500),
+(3, 'Charlie', 'Engineering', 5000),
+(4, 'Diana', 'Engineering', 7000),
+(5, 'Ethan', 'Engineering', 6000),
+(6, 'Fiona', 'Marketing', 4300),
+(7, 'George', 'Marketing', 4300),
+(8, 'Hannah', 'Marketing', 4900),
+(9, 'Ivan', 'HR', 4700),
+(10, 'Julia', 'Engineering', 6900);
+
+#Q. 부서별로 최고 급여를 받는 직원의 이름과 부서명, 급여를 조회하시오.
+SELECT NAME, DEPARTMENT, SALARY
+FROM EMPLOYEES e
+WHERE SALARY = (
+  SELECT MAX(SALARY)
+  FROM EMPLOYEES e2
+  WHERE e2.DEPARTMENT = e.DEPARTMENT #부서별로 최고 급여의 값을 구한다
+);
