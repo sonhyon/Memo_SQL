@@ -1,0 +1,49 @@
+#Q. 직원의 이름(name)과 급여 등급을 함께 출력하는 SQL 문을 작성하시오.
+ SELECT name,
+  CASE
+    WHEN salary >= 5000 THEN 'High'
+    WHEN salary >= 4000 THEN 'Medium'
+    ELSE 'Low'
+  END AS salary_grade
+FROM employees;
+
+#Q. 부서별로 최고 급여를 받는 직원의 이름과 부서명, 급여를 조회하시오.
+SELECT NAME, DEPARTMENT, SALARY
+FROM EMPLOYEES e
+WHERE SALARY = (
+  SELECT MAX(SALARY)
+  FROM EMPLOYEES e2
+  WHERE e2.DEPARTMENT = e.DEPARTMENT #부서별로 최고 급여의 값을 구한다
+);
+
+#Q. 각 부서 평균 급여보다 높은 급여를 받는 직원들의 이름, 부서명, 급여를 출력. (급여 높은 순)
+SELECT e.name, d.department_name, e.salary FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+WHERE e.salary > (SELECT AVG(e2.salary) FROM employees e2 WHERE e2.department_id = e.department_id)
+ORDER BY e.salary DESC;
+
+#Q. 부서별(department_id)로 최근에 입사한 직원의 이름(name), 부서번호(department_id), 입사일(hire_date) 을 조회하라.
+SELECT name, department_id, hire_date FROM employees e1
+WHERE hire_date = (
+    SELECT MAX(hire_date)
+    FROM employees e2
+    WHERE e1.department_id = e2.department_id
+)
+ORDER BY department_id;
+
+#Q. employees 테이블에서 **부서별(department_id)**로 급여가 가장 높은 직원의 이름(name), 부서번호(department_id), 급여(salary)를 출력하세요.
+SELECT NAME, DEPARTMENT_ID, SALARY 
+FROM EMPLOYEES E1
+WHERE SALARY = (
+  SELECT MAX(SALARY)
+  FROM EMPLOYEES E2
+  WHERE E2.DEPARTMENT_ID = E1.DEPARTMENT_ID
+);
+
+#Q. 전체 직원 평균 급여보다 높은 급여를 받는 직원들의 이름과 급여를 출력하시오. (FROM 절 안에 서브쿼리를 넣기)
+SELECT NAME, SALARY
+FROM (
+    SELECT NAME, SALARY, (SELECT AVG(SALARY) FROM EMPLOYEES) AS avg_salary
+    FROM EMPLOYEES
+) AS sub
+WHERE SALARY > avg_salary;
