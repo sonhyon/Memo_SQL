@@ -1,0 +1,18 @@
+CREATE TABLE orders (
+  order_id INT,
+  customer_id INT,
+  order_date DATE
+);
+
+INSERT INTO orders (order_id, customer_id, order_date) VALUES
+(1, 101, '2023-01-10'),
+(2, 101, '2023-03-15'),
+(3, 102, '2023-02-20'),
+(4, 103, '2023-01-25'),
+(5, 102, '2023-04-05'),
+(6, 103, '2023-03-10');
+SELECT * FROM ORDERS;
+
+#Q. 각 고객(customer_id)별로 최근 주문일(latest_order_date)을 구하시오.
+SELECT CUSTOMER_ID, MAX(ORDER_DATE) FROM ORDERS
+GROUP BY CUSTOMER_ID;
