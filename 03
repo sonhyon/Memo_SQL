@@ -1,0 +1,26 @@
+CREATE TABLE sales (
+  sale_id INT,
+  product_id INT,
+  quantity INT
+);
+
+INSERT INTO sales (sale_id, product_id, quantity) VALUES
+(1, 101, 5),
+(2, 102, 10),
+(3, 101, 8),
+(4, 103, 7),
+(5, 102, 12),
+(6, 103, 6),
+(7, 104, 20),
+(8, 105, 3);
+SELECT * FROM SALES;
+
+#Q. 각 상품(product_id)의 총 판매량을 구한 뒤, 그 판매량이 20 이상인 상품만 조회하시오
+WITH product_totals AS (
+  SELECT product_id, SUM(quantity) AS total_quantity
+  FROM sales
+  GROUP BY product_id
+)
+SELECT product_id, total_quantity
+FROM product_totals
+WHERE total_quantity >= 20;
