@@ -1,0 +1,20 @@
+-- 테이블 생성
+CREATE TABLE PRODUCTS (
+    PRODUCT_ID INT PRIMARY KEY,
+    NAME VARCHAR(100),
+    PRICE INT
+);
+
+-- 초기 데이터 삽입
+INSERT INTO PRODUCTS (PRODUCT_ID, NAME, PRICE) VALUES
+(1, '볼펜', 1500),
+(2, '공책', 1500),
+(3, '싸인펜', 25000),
+(4, '연필', 300),
+(5, '필통', 3000);
+SELECT * FROM PRODUCTS;
+
+#Q. 상품 테이블에서 가격이 1000원 이상이고 이름에 '펜'이 포함된 상품의 이름과 가격을 가격 오름차순으로 조회하세요.
+SELECT NAME, PRICE FROM PRODUCTS
+WHERE PRICE >= 1000 AND NAME LIKE '%펜%'
+ORDER BY PRICE ASC;
