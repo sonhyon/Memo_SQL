@@ -1,0 +1,25 @@
+CREATE TABLE Employees (
+  EmployeeID INT PRIMARY KEY,
+  EmployeeName VARCHAR(50),
+  Department VARCHAR(50),
+  HireDate DATE
+);
+
+INSERT INTO Employees (EmployeeID, EmployeeName, Department, HireDate) VALUES
+(1, 'Alice', 'HR', '2019-01-10'),
+(2, 'Bob', 'HR', '2020-03-15'),
+(3, 'Charlie', 'IT', '2018-07-01'),
+(4, 'David', 'IT', '2021-11-20'),
+(5, 'Eve', 'Marketing', '2020-05-05'),
+(6, 'Frank', 'Marketing', '2019-09-09');
+SELECT * FROM Employees;
+
+
+#Q. 각 부서별로 입사일이 가장 빠른 사원 1명을 조회하시오.
+SELECT EmployeeName, Department, HireDate
+FROM (
+  SELECT *,
+         ROW_NUMBER() OVER (PARTITION BY Department ORDER BY HireDate DESC) AS rn
+  FROM Employees
+) ranked
+WHERE rn = 1;
