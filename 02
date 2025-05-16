@@ -32,8 +32,8 @@ SELECT * FROM CUSTOMERS;
 SELECT * FROM ORDERS;
 
 #Q. 한 달 동안 두 번 이상 구매한 고객의 이름과 각 고객의 총 구매 횟수를 구하세요.
-SELECT c.name, COUNT(o.order_id) AS purchase_count FROM customers c
-JOIN orders o ON c.customer_id = o.customer_id
-WHERE o.order_date BETWEEN '2025-05-01' AND '2025-05-31'
-GROUP BY c.customer_id, c.name
-HAVING COUNT(o.order_id) >= 2;
+SELECT C.NAME, COUNT(O.ORDER_ID) AS PURCHASE_COUNT FROM CUSTOMERS C
+JOIN ORDERS O ON C.CUSTOMER_ID = O.CUSTOMER_ID
+WHERE O.ORDER_DATE BETWEEN '2025-05-01' AND '2025-05-31'
+GROUP BY c.name
+HAVING COUNT(O.ORDER_ID) >= 2;
