@@ -1,0 +1,52 @@
+-- 고객 테이블
+CREATE TABLE Customers (
+  CustomerID INT PRIMARY KEY,
+  CustomerName VARCHAR(50)
+);
+
+INSERT INTO Customers (CustomerID, CustomerName) VALUES
+(1, 'Alice'),
+(2, 'Bob'),
+(3, 'Charlie');
+
+-- 상품 테이블
+CREATE TABLE Products (
+  ProductID INT PRIMARY KEY,
+  ProductName VARCHAR(50)
+);
+
+INSERT INTO Products (ProductID, ProductName) VALUES
+(101, 'Laptop'),
+(102, 'Smartphone'),
+(103, 'Headphones');
+
+-- 주문 테이블
+CREATE TABLE Orders (
+  OrderID INT PRIMARY KEY,
+  CustomerID INT,
+  ProductID INT,
+  OrderDate DATE,
+  FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+  FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+INSERT INTO Orders (OrderID, CustomerID, ProductID, OrderDate) VALUES
+(1, 1, 101, '2024-12-01'),
+(2, 1, 102, '2025-01-15'),
+(3, 2, 103, '2025-02-10'),
+(4, 2, 101, '2025-03-05'),
+(5, 3, 102, '2025-02-25');
+SELECT * FROM CUSTOMERS;
+SELECT * FROM PRODUCTS;
+SELECT * FROM ORDERS;
+
+
+#Q. 가장 최근 구매일 기준으로 고객별 마지막 구매 상품의 이름과 구매일을 조회하시오.
+SELECT C.CustomerName, P.ProductName, O.OrderDate FROM Orders O
+JOIN Customers C ON C.CustomerID = O.CustomerID
+JOIN Products P ON P.ProductID = O.ProductID
+WHERE O.OrderDate = (
+    SELECT MAX(O2.OrderDate)
+    FROM Orders O2
+    WHERE O2.CustomerID = O.CustomerID
+  );
