@@ -1,0 +1,26 @@
+-- 직원 테이블 생성
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+);
+
+-- 예시 데이터 삽입
+INSERT INTO employees (id, name, department, salary) VALUES
+(1, 'Alice', 'Sales', 5000),
+(2, 'Bob', 'Sales', 6000),
+(3, 'Charlie', 'HR', 4000),
+(4, 'David', 'HR', 4500),
+(5, 'Eve', 'IT', 7000),
+(6, 'Frank', 'IT', 6000),
+(7, 'Grace', 'Sales', 5500),
+(8, 'Heidi', 'HR', 4800);
+SELECT * FROM EMPLOYEES;
+
+
+#Q. 직원 테이블에서 같은 부서 내에서 급여 순위가 2위인 직원들의 이름, 부서, 급여를 조회하세요
+SELECT name, department, salary
+FROM (SELECT name, department, salary,
+        RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS salary_rank FROM employees) ranked
+WHERE salary_rank = 2;
