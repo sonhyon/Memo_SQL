@@ -1,0 +1,23 @@
+-- 출근 기록 테이블 생성
+CREATE TABLE attendance (
+    id INT PRIMARY KEY,
+    employee_name VARCHAR(50),
+    attendance_date DATE
+);
+
+-- 예시 데이터 삽입
+INSERT INTO attendance (id, employee_name, attendance_date) VALUES
+(1, 'Alice', '2024-05-01'),
+(2, 'Alice', '2024-05-03'),
+(3, 'Bob', '2024-05-02'),
+(4, 'Bob', '2024-05-04'),
+(5, 'Charlie', '2024-05-01'),
+(6, 'Charlie', '2024-05-06'),
+(7, 'Alice', '2024-05-05'),
+(8, 'Bob', '2024-05-07');
+SELECT * FROM ATTENDANCE;
+
+
+#Q. 직원 출근 기록 테이블에서 직원별로 가장 최근 출근일을 조회하세요. 단, 이름과 최근 출근일만 출력하세요.
+SELECT EMPLOYEE_NAME, MAX(ATTENDANCE_DATE) FROM ATTENDANCE
+GROUP BY EMPLOYEE_NAME;
