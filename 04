@@ -1,0 +1,24 @@
+-- 직원 테이블 생성
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+);
+
+-- 예시 데이터 삽입
+INSERT INTO employees (id, name, department, salary) VALUES
+(1, 'Alice', 'Sales', 5000),
+(2, 'Bob', 'Sales', 6000),
+(3, 'Charlie', 'HR', 4000),
+(4, 'David', 'HR', 4500),
+(5, 'Eve', 'IT', 7000),
+(6, 'Frank', 'IT', 6000),
+(7, 'Grace', 'Sales', 5500),
+(8, 'Heidi', 'HR', 4800);
+SELECT * FROM EMPLOYEES;
+
+#Q. 직원 테이블에서 부서별 평균 급여보다 급여가 높은 직원들의 이름과 급여를 조회하세요
+SELECT E.DEPARTMENT, E.NAME, E.SALARY FROM EMPLOYEES E
+WHERE E.SALARY > (SELECT AVG(E2.SALARY) FROM EMPLOYEES E2
+	WHERE E.DEPARTMENT = E2.DEPARTMENT);
