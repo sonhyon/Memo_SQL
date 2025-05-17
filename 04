@@ -1,25 +1,23 @@
-CREATE TABLE Employees (
-  EmployeeID INT PRIMARY KEY,
-  EmployeeName VARCHAR(50),
-  Department VARCHAR(50),
-  HireDate DATE
+-- 1. 테이블 생성
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Class CHAR(1),
+    Score INT
 );
 
-INSERT INTO Employees (EmployeeID, EmployeeName, Department, HireDate) VALUES
-(1, 'Alice', 'HR', '2019-01-10'),
-(2, 'Bob', 'HR', '2020-03-15'),
-(3, 'Charlie', 'IT', '2018-07-01'),
-(4, 'David', 'IT', '2021-11-20'),
-(5, 'Eve', 'Marketing', '2020-05-05'),
-(6, 'Frank', 'Marketing', '2019-09-09');
-SELECT * FROM Employees;
+-- 2. 데이터 삽입
+INSERT INTO Students (StudentID, Name, Class, Score) VALUES
+(1, 'Alice',   'A', 85),
+(2, 'Bob',     'A', 92),
+(3, 'Charlie', 'B', 88),
+(4, 'David',   'A', 78),
+(5, 'Eva',     'B', 95),
+(6, 'Frank',   'B', 85);
+SELECT * FROM STUDENTS;
 
 
-#Q. 각 부서별로 입사일이 가장 빠른 사원 1명을 조회하시오.
-SELECT EmployeeName, Department, HireDate
-FROM (
-  SELECT *,
-         ROW_NUMBER() OVER (PARTITION BY Department ORDER BY HireDate DESC) AS rn
-  FROM Employees
-) ranked
-WHERE rn = 1;
+#Q. Class별로 학생들의 Score를 기준으로 내림차순 정렬해서 순위를 매기세요. (즉, 같은 반에서 점수 높은 사람이 1등)
+SELECT StudentID, Name, Class, Score,
+    ROW_NUMBER() OVER (PARTITION BY Class ORDER BY Score DESC) AS `Rank`
+FROM Students;
