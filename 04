@@ -1,0 +1,41 @@
+CREATE TABLE customers (
+  customer_id INT PRIMARY KEY,
+  name VARCHAR(50),
+  gender VARCHAR(10),
+  birth_year INT
+);
+
+INSERT INTO customers VALUES
+(1, 'Alice', 'F', 1990),
+(2, 'Bob', 'M', 1985),
+(3, 'Carol', 'F', 1995),
+(4, 'David', 'M', 1992),
+(5, 'Eve', 'F', 1988);
+
+CREATE TABLE purchases (
+  purchase_id INT PRIMARY KEY,
+  customer_id INT,
+  amount DECIMAL(10, 2),
+  purchase_date DATE
+);
+
+INSERT INTO purchases VALUES
+(101, 1, 20000, '2023-01-15'),
+(102, 2, 15000, '2023-03-22'),
+(103, 1, 25000, '2023-06-10'),
+(104, 3, 18000, '2022-11-20'),
+(105, 4, 12000, '2023-07-05'),
+(106, 1, 22000, '2022-12-01'),
+(107, 2, 16000, '2023-08-14'),
+(108, 5, 30000, '2023-09-10'),
+(109, 5, 27000, '2023-12-01');
+
+SELECT * FROM CUSTOMERS;
+SELECT * FROM purchases;
+
+#Q. 2023년에 2회 이상 구매한 고객들의 평균 구매 금액을 구하시오.
+SELECT C.NAME, COUNT(P.PURCHASE_ID) AS PURCHASE_CNT FROM PURCHASES P
+LEFT JOIN CUSTOMERS C ON C.CUSTOMER_ID = P.CUSTOMER_ID
+WHERE P.PURCHASE_DATE BETWEEN '2023-01-01' AND '2023-12-31'
+GROUP BY C.NAME
+HAVING PURCHASE_CNT >= 2;
