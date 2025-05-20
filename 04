@@ -33,9 +33,15 @@ INSERT INTO purchases VALUES
 SELECT * FROM CUSTOMERS;
 SELECT * FROM purchases;
 
+
 #Q. 2023년에 2회 이상 구매한 고객들의 평균 구매 금액을 구하시오.
-SELECT C.NAME, COUNT(P.PURCHASE_ID) AS PURCHASE_CNT FROM PURCHASES P
-LEFT JOIN CUSTOMERS C ON C.CUSTOMER_ID = P.CUSTOMER_ID
-WHERE P.PURCHASE_DATE BETWEEN '2023-01-01' AND '2023-12-31'
-GROUP BY C.NAME
-HAVING PURCHASE_CNT >= 2;
+SELECT AVG(p.amount) AS avg_purchase_amount
+FROM (
+    SELECT customer_id
+    FROM purchases
+    WHERE YEAR(purchase_date) = 2023
+    GROUP BY customer_id
+    HAVING COUNT(*) >= 2
+) AS frequent_customers
+JOIN purchases p ON frequent_customers.customer_id = p.customer_id
+WHERE YEAR(p.purchase_date) = 2023;
