@@ -20,7 +20,7 @@ SELECT * FROM EMPLOYEES;
 
 
 #Q. 직원 테이블에서 같은 부서 내에서 급여 순위가 2위인 직원들의 이름, 부서, 급여를 조회하세요
-SELECT name, department, salary
-FROM (SELECT name, department, salary,
-        RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS salary_rank FROM employees) ranked
-WHERE salary_rank = 2;
+SELECT DEPARTMENT, NAME, SALARY
+FROM (SELECT *,
+	RANK() OVER (PARTITION BY DEPARTMENT ORDER BY SALARY DESC) AS SALARY_RANK FROM EMPLOYEES) RANKED
+WHERE SALARY_RANK = 2;
