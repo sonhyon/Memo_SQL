@@ -1,0 +1,23 @@
+CREATE TABLE employees (
+    id INT,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO employees (id, name, department, salary) VALUES
+(1, 'Alice', 'Sales', 5000),
+(2, 'Bob', 'Sales', 7000),
+(3, 'Charlie', 'HR', 4000),
+(4, 'David', 'HR', 6000),
+(5, 'Eve', 'IT', 5500),
+(6, 'Frank', 'IT', 5000),
+(7, 'Grace', 'Sales', 6000),
+(8, 'Heidi', 'IT', 7000);
+SELECT * FROM EMPLOYEES;
+
+
+#Q. 각 부서(department)에서 평균 급여(salary)보다 급여가 높은 직원의 이름(name)과 부서명을 출력하세요
+SELECT E1.NAME, E1.DEPARTMENT
+FROM EMPLOYEES E1
+WHERE E1.SALARY > (SELECT AVG(E2.SALARY) FROM EMPLOYEES E2 WHERE E1.DEPARTMENT = E2.DEPARTMENT);
