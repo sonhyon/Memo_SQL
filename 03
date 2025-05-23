@@ -1,0 +1,26 @@
+CREATE TABLE employees (
+    id INT,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO employees (id, name, department, salary) VALUES
+(1, 'Alice', 'Sales', 5000),
+(2, 'Bob', 'Sales', 7000),
+(3, 'Charlie', 'HR', 4000),
+(4, 'David', 'HR', 6000),
+(5, 'Eve', 'IT', 5500),
+(6, 'Frank', 'IT', 5000),
+(7, 'Grace', 'Sales', 6000),
+(8, 'Heidi', 'IT', 7000),
+(9, 'Ivy', 'HR', 5000);
+SELECT * FROM EMPLOYEES;
+
+
+#Q. 직원 테이블에서 부서별 급여 순위를 매기고, 각 부서에서 급여가 두 번째로 높은 직원의 이름과 부서명을 출력하세요
+SELECT NAME, DEPARTMENT
+FROM (SELECT NAME, DEPARTMENT,
+	ROW_NUMBER() OVER (PARTITION BY DEPARTMENT ORDER BY SALARY DESC) AS RANKED
+    FROM EMPLOYEES) RNK
+WHERE RANKED = 2;
