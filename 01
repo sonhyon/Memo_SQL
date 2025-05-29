@@ -1,0 +1,39 @@
+-- 고객 테이블
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+INSERT INTO customers (customer_id, name) VALUES
+(1, 'Alice'),
+(2, 'Bob'),
+(3, 'Charlie');
+
+-- 주문 테이블
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    amount DECIMAL(10, 2),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+INSERT INTO orders (order_id, customer_id, amount) VALUES
+(101, 1, 250.00),
+(102, 2, 300.00),
+(103, 1, 150.00),
+(104, 3, 200.00),
+(105, 2, 450.00),
+(106, 2, 100.00);
+SELECT * FROM CUSTOMERS;
+SELECT * FROM ORDERS;
+
+
+#Q. 가장 많은 주문을 한 고객의 이름과 총 주문 금액을 구하세요.
+SELECT name, total_amount
+FROM (SELECT c.name, SUM(o.amount) AS total_amount,
+        ROW_NUMBER() OVER (ORDER BY SUM(o.amount) DESC) AS ranked
+    FROM customers c
+    JOIN orders o ON c.customer_id = o.customer_id
+    GROUP BY c.customer_id, c.name
+) AS ranked_customers
+WHERE ranked = 1;
