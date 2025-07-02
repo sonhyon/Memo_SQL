@@ -1,0 +1,24 @@
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO employees (employee_id, name, department, salary) VALUES
+(1, 'Kim', 'Sales', 5000),
+(2, 'Lee', 'Sales', 6000),
+(3, 'Park', 'Sales', 5500),
+(4, 'Choi', 'HR', 4500),
+(5, 'Jung', 'HR', 4800),
+(6, 'Han', 'HR', 4700),
+(7, 'Yoon', 'Engineering', 7000),
+(8, 'Kang', 'Engineering', 7100),
+(9, 'Jin', 'Engineering', 6900),
+(10, 'Seo', 'Marketing', 5200);
+
+#Q. 각 부서(department)별로 직원들의 월급(salary) 평균과 최대값을 구하되, 직원 수가 3명 이상인 부서만 출력하세요.
+SELECT department, AVG(salary) AS mean_salary, MAX(salary) AS max_salary
+FROM employees
+GROUP BY department
+HAVING COUNT(*) >= 3;
