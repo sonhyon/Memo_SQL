@@ -1,0 +1,27 @@
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO employees (employee_id, name, department, salary) VALUES
+(1, 'Kim', 'Sales', 5000),
+(2, 'Lee', 'Sales', 6000),
+(3, 'Park', 'Sales', 5500),
+(4, 'Choi', 'HR', 4500),
+(5, 'Jung', 'HR', 4800),
+(6, 'Han', 'HR', 4700),
+(7, 'Yoon', 'Engineering', 7000),
+(8, 'Kang', 'Engineering', 7100),
+(9, 'Jin', 'Engineering', 6900),
+(10, 'Seo', 'Marketing', 5200);
+
+#Q. 각 부서(department)에서 월급(salary)이 부서 내 평균 월급보다 높은 직원들의 이름(name)과 월급을 부서별로 내림차순 정렬하여 출력하세요.
+SELECT e.name, e.department, e.salary
+FROM employees e
+WHERE e.salary > (
+    SELECT AVG(salary)
+    FROM employees
+    WHERE department = e.department)
+ORDER BY e.department, e.salary DESC;
