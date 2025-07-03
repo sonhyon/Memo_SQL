@@ -1,0 +1,29 @@
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO employees (employee_id, name, department, salary) VALUES
+(1,  'Kim',  'Sales',       5000),
+(2,  'Lee',  'Sales',       6000),
+(3,  'Park', 'Sales',       5500),
+(4,  'Choi', 'HR',          4500),
+(5,  'Jung', 'HR',          4800),
+(6,  'Han',  'HR',          4700),
+(7,  'Yoon', 'Engineering', 7000),
+(8,  'Kang', 'Engineering', 7100),
+(9,  'Jin',  'Engineering', 6900),
+(10, 'Seo',  'Marketing',   5200);
+
+#Q.각 부서(department)에서 **가장 높은 월급(salary)**을 받는 직원들의 **이름(name), 부서명(department), 월급(salary)**을 출력하세요. 결과는 월급을 기준으로 내림차순 정렬하세요 
+SELECT e.name, e.department, e.salary
+FROM employees e
+JOIN (
+    SELECT department, MAX(salary) AS max_salary
+    FROM employees
+    GROUP BY department
+) dept_max
+ON e.department = dept_max.department AND e.salary = dept_max.max_salary
+ORDER BY e.salary DESC;
