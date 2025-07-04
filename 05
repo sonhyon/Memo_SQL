@@ -1,0 +1,30 @@
+CREATE TABLE projects (
+    project_id INT PRIMARY KEY,
+    employee_id INT,
+    project_name VARCHAR(50),
+    hours_spent INT
+);
+
+INSERT INTO projects (project_id, employee_id, project_name, hours_spent) VALUES
+(1,  101, 'Alpha',     120),
+(2,  101, 'Beta',       80),
+(3,  102, 'Gamma',     150),
+(4,  102, 'Delta',      90),
+(5,  103, 'Alpha',     200),
+(6,  103, 'Gamma',     200),
+(7,  104, 'Epsilon',    60),
+(8,  104, 'Zeta',       70);
+
+#Q. 다음은 projects 테이블입니다. 각 직원이 어떤 프로젝트에 참여했는지와 **기여시간(hours_spent)**을 나타냅니다. 
+#각 직원(employee_id)마다 가장 오래 참여한 프로젝트의 **project_name, hours_spent** 정보를 출력**하세요.
+#단, 결과는 hours_spent 기준으로 내림차순 정렬하세요.
+SELECT p.employee_id, p.project_name, p.hours_spent
+FROM projects p
+JOIN (
+    SELECT employee_id, MAX(hours_spent) AS max_hours
+    FROM projects
+    GROUP BY employee_id
+) max_proj
+ON p.employee_id = max_proj.employee_id
+AND p.hours_spent = max_proj.max_hours
+ORDER BY p.hours_spent DESC;
